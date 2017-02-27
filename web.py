@@ -9,7 +9,7 @@ def post_served():
     Send post request with data served=true
     """
     url = "http://spscoffee.herokuapp.com/brew-request/"
-    url = "http://localhost:8000/brew-request/"
+    # url = "http://localhost:8000/brew-request/"
 
     data = urlencode({ "served":"true" }).encode()
     request = Request(url, data)
@@ -23,7 +23,7 @@ def loop():
     be called repeatedly in a loop.
     """
     url = "http://spscoffee.herokuapp.com/brew-request/"
-    url = "http://localhost:8000/brew-request/"
+    # url = "http://localhost:8000/brew-request/"
 
     response = urlopen(url).read().decode()
     if response == "Yay!":
@@ -32,7 +32,3 @@ def loop():
         print("Sending post request to server...")
         post_served()
         print()
-
-while True:
-    loop()
-    time.sleep(0.1)
