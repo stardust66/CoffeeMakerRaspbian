@@ -17,7 +17,7 @@ def post_served():
 
 def loop():
     """Check the website for status
-    
+
     If someone presses the brew button on the website, the brew_request
     page will say "yes". If not it'll say "no". This function should
     be called repeatedly in a loop.
