@@ -3,14 +3,14 @@ from urllib.parse import urlencode
 from urllib.error import HTTPError
 import time
 
-def post_served():
+url = "http://spscoffee.herokuapp.com/brew-request/"
+# url = "http://localhost:8000/brew-request/"
+
+def post_served(url):
     """Tell the server that the coffee has been served
 
     Send post request with data served=true
     """
-    url = "http://spscoffee.herokuapp.com/brew-request/"
-    # url = "http://localhost:8000/brew-request/"
-
     data = urlencode({ "served":"true" }).encode()
     request = Request(url, data)
     print(urlopen(request).read().decode())
@@ -22,13 +22,10 @@ def loop():
     page will say "yes". If not it'll say "no". This function should
     be called repeatedly in a loop.
     """
-    url = "http://spscoffee.herokuapp.com/brew-request/"
-    # url = "http://localhost:8000/brew-request/"
-
     response = urlopen(url).read().decode()
     if response == "Yay!":
-        print("make coffee")
-        print()
         print("Sending post request to server...")
-        post_served()
+        post_served(url)
         print()
+        return True
+    return False
