@@ -7,6 +7,10 @@ GPIO.setmode(GPIO.BOARD)
 
 # Using GPIO03
 GPIO.setup(5, GPIO.OUT)
+GPIO.setup(7, GPIO.OUT)
+
+# Launch Indicator
+GPIO.output(7, GPIO.HIGH)
 
 def make_coffee():
     GPIO.output(5, GPIO.HIGH)
