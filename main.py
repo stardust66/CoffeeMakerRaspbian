@@ -25,5 +25,6 @@ while True:
         if twitter.loop() or web.loop():
             make_coffee()
     except:
-        pass
+        if web.loop():
+            make_coffee()
     time.sleep(1)
