@@ -21,7 +21,9 @@ def make_coffee():
     GPIO.output(5, GPIO.LOW)
 
 while True:
-    if twitter.loop() or web.loop():
-        make_coffee()
-
+    try:
+        if twitter.loop() or web.loop():
+            make_coffee()
+    except:
+        pass
     time.sleep(1)
