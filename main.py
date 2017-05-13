@@ -1,5 +1,5 @@
 from twitter import TwitterChecker
-import web
+from web import WebChecker
 import time
 from RPi import GPIO
 
@@ -13,7 +13,8 @@ GPIO.setup(7, GPIO.OUT)
 GPIO.output(7, GPIO.HIGH)
 
 # Initialize TwitterChecker
-checker = TwitterChecker()
+t_checker = TwitterChecker(logger)
+w_checker = WebChecker(logger)
 
 def make_coffee():
     GPIO.output(5, GPIO.HIGH)
@@ -25,9 +26,9 @@ def make_coffee():
 
 while True:
     try:
-        if checker.loop() or web.loop():
+        if t_checker.loop() or w_checker.loop():
             make_coffee()
     except:
-        if web.loop():
+        if w_checker.loop():
             make_coffee()
     time.sleep(1)
