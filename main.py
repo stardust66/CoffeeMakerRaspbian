@@ -6,10 +6,22 @@ import sys
 from RPi import GPIO
 
 # Configure Log
-logging.basicConfig(format='%(asctime)s:%(name)s: %(message)s',
-                    filename="coffee.log", level=logging.WARNING)
-logger = logging.getLogger("script")
+logger = logging.getLogger("main")
+fh = logging.FileHandler("coffee.log", mode="w")
+ih = logging.FileHandler("important.log")
+fm = logging.Formatter('%(asctime)s:%(name)s: %(message)s')
+
+fh.setLevel(logging.DEBUG)
+ih.setLevel(logging.WARNING)
+fh.setFormatter(fm)
+ih.setFormatter(fm)
+
+logger = logging.getLogger("main")
+logger.addHandler(fh)
+logger.addHandler(ih)
 logger.setLevel(logging.DEBUG)
+
+logger.debug("Initialized")
 
 GPIO.setmode(GPIO.BCM)
 
