@@ -3,22 +3,31 @@ import pprint
 import time
 import datetime
 import os
+import sys
 
 pp = pprint.PrettyPrinter(indent=4)
 
-# Authentication
-auth1 = os.environ["AUTH_HANDLE1"]
-auth2 = os.environ["AUTH_HANDLE2"]
-access1 = os.environ["ACCESS1"]
-access2 = os.environ["ACCESS2"]
-auth = tweepy.OAuthHandler(auth1, auth2)
-auth.set_access_token(access1, access2)
-api = tweepy.API(auth)
 
 allowed_users = ["jasonchen66"]
 
 class TwitterChecker():
     def __init__(self, logger):
+        # Authentication
+        try:
+            auth1 = os.environ["AUTH_HANDLE1"]
+            auth2 = os.environ["AUTH_HANDLE2"]
+            access1 = os.environ["ACCESS1"]
+            access2 = os.environ["ACCESS2"]
+        except:
+            logger.error("Twitter authentication failed.")
+            logger.error("Exiting!")
+            sys.exit()
+
+        auth = tweepy.OAuthHandler(auth1, auth2)
+        auth.set_access_token(access1, access2)
+        self.api = tweepy.API(auth)
+
+
         self.last_checked = (datetime.datetime.now()
                              - datetime.timedelta(seconds=15))
         self.logger = logger
