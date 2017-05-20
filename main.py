@@ -6,9 +6,10 @@ import sys
 from RPi import GPIO
 
 # Configure Log
+LOGDIR = "/home/pi/Documents/coffeemakerraspbian/"
 logger = logging.getLogger("main")
-fh = logging.FileHandler("coffee.log", mode="w")
-ih = logging.FileHandler("important.log")
+fh = logging.FileHandler(LOGDIR + "coffee.log", mode="w")
+ih = logging.FileHandler(LOGDIR + "important.log")
 fm = logging.Formatter('%(asctime)s:%(name)s: %(message)s')
 
 fh.setLevel(logging.DEBUG)
