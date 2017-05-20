@@ -3,7 +3,11 @@ from web import WebChecker
 import time
 import logging
 import sys
+import os
 from RPi import GPIO
+
+# Set timezone
+os.environ["TZ"] = "US/Eastern"
 
 # Configure Log
 LOGDIR = "/home/pi/Documents/coffeemakerraspbian/"
