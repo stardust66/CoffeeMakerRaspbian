@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from twitter import TwitterChecker
 from web import WebChecker
 import time
@@ -51,14 +53,14 @@ def make_coffee():
 while True:
     try:
         if t_checker.loop() or w_checker.loop():
-            logging.debug("Coffee is being made.")
+            logger.debug("Coffee is being made.")
             make_coffee()
     except KeyboardInterrupt:
         sys.exit()
-        logging.warning("User interrupted.")
+        logger.warning("User interrupted.")
     except:
-        logging.warning("Twitter limit hit.")
+        logger.warning("Twitter limit hit.")
         if w_checker.loop():
-            logging.debug("Coffee is being made.")
+            logger.debug("Coffee is being made.")
             make_coffee()
     time.sleep(1)
