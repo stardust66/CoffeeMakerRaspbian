@@ -43,6 +43,10 @@ class TwitterChecker():
             search = self.api.search("#spscoffee2k17")
             if search:
                 first_post = search[0]
+                
+                # Correct for timezone
+                eastern = datetime.timedelta(hours=4)
+                first_post.created_at -= eastern
 
                 # Check if the post is made within five minutes
                 if (first_post.created_at > delta and
