@@ -7,7 +7,7 @@ import sys
 
 pp = pprint.PrettyPrinter(indent=4)
 
-allowed_users = ["jasonchen66"]
+allowed_users = ["jasonchen66", "s0rokka"]
 
 class TwitterChecker():
     def __init__(self, logger):
