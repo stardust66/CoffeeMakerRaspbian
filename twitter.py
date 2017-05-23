@@ -40,7 +40,7 @@ class TwitterChecker():
                     - datetime.timedelta(seconds=40, minutes=4))
 
             self.last_checked = datetime.datetime.now()
-            search = api.search("#spscoffee2k17")
+            search = self.api.search("#spscoffee2k17")
             if search:
                 first_post = search[0]
 
