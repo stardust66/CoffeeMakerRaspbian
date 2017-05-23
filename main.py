@@ -6,6 +6,7 @@ import time
 import logging
 import sys
 import os
+import atexit
 from RPi import GPIO
 
 # Set timezone
@@ -42,6 +43,12 @@ GPIO.output(23, GPIO.HIGH)
 # Initialize TwitterChecker
 t_checker = TwitterChecker(logger)
 w_checker = WebChecker(logger)
+
+# Clean up
+def clean_up():
+    GPIO.cleanup()
+
+atexit.register(clean_up)
 
 def make_coffee():
     GPIO.output(18, GPIO.HIGH)
