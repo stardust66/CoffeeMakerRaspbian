@@ -33,9 +33,14 @@ logger.debug("Initialized")
 
 GPIO.setmode(GPIO.BCM)
 
-# Using GPIO03
+# GPIO18 - Coffee Machine
+# GPIO23 - Script Running Status
+# GPIO16 - Load Indicator
+# GPIO12 - Switch
 GPIO.setup(18, GPIO.OUT)
 GPIO.setup(23, GPIO.OUT)
+GPIO.setup(16, GPIO.OUT)
+GPIO.setup(12, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 # Launch Indicator
 GPIO.output(23, GPIO.HIGH)
@@ -44,6 +49,9 @@ GPIO.output(23, GPIO.HIGH)
 t_checker = TwitterChecker(logger)
 w_checker = WebChecker(logger)
 
+loaded = False
+prev_status = GPIO.input(12)
+
 # Clean up
 def clean_up():
     GPIO.cleanup()
@@ -51,6 +59,11 @@ def clean_up():
 atexit.register(clean_up)
 
 def make_coffee():
+    loaded = False
+
+    # Turn load indicator off
+    GPIO.output(16, GPIO.LOW)
+
     GPIO.output(18, GPIO.HIGH)
 
     # Pause for five minutes (or how long it take to make coffee)
@@ -58,8 +71,14 @@ def make_coffee():
     GPIO.output(18, GPIO.LOW)
 
 while True:
+    if prev_status != GPIO.input(12):
+        loaded = True
+
+    # Set load indicator accordingly
+    GPIO.output(16, loaded)
+
     try:
-        if t_checker.loop() or w_checker.loop():
+        if loaded and (t_checker.loop() or w_checker.loop()):
             logger.debug("Coffee is being made.")
             make_coffee()
     except KeyboardInterrupt:
@@ -70,4 +89,7 @@ while True:
         if w_checker.loop():
             logger.debug("Coffee is being made.")
             make_coffee()
+
+    prev_status = GPIO.input(12)
     time.sleep(1)
+
