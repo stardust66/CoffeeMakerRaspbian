@@ -70,6 +70,8 @@ def make_coffee():
     time.sleep(300)
     GPIO.output(18, GPIO.LOW)
 
+    prev_status = GPIO.input(12)
+
 while True:
     if prev_status != GPIO.input(12):
         loaded = True
