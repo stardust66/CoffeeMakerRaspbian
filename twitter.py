@@ -40,6 +40,7 @@ class TwitterChecker():
                 first_post = search[0]
 
                 # Correct for timezone
+                # Only works for EDT
                 eastern = datetime.timedelta(hours=4)
                 first_post.created_at -= eastern
 
