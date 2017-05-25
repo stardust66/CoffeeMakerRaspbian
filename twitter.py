@@ -45,8 +45,7 @@ class TwitterChecker():
                 first_post.created_at -= eastern
 
                 # Check if the post is made within five minutes
-                if (first_post.created_at > delta and
-                        first_post.user.screen_name in allowed_users):
+                if (self._validate_post(first_post)):
                     self.logger.debug("Found tweet.")
 
                     text = first_post.text
@@ -65,4 +64,15 @@ class TwitterChecker():
                 return False
         print("It hasn't been 15 seconds yet")
         return False
+
+    def _validate_post(self, post):
+        allowed_users = ["jasonchen66", "s0rokka"]
+        delta = (datetime.datetime.now()
+                - datetime.timedelta(seconds=40, minutes=4))
+
+        if (post.created_at > delta and
+                post.user.screen_name in allowed_users):
+            return True
+        else:
+            return False
 
