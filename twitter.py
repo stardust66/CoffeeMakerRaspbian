@@ -1,11 +1,8 @@
 import tweepy
-import pprint
 import time
 import datetime
 import os
 import sys
-
-pp = pprint.PrettyPrinter(indent=4)
 
 allowed_users = ["jasonchen66", "s0rokka"]
 
