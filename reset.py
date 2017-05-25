@@ -6,3 +6,6 @@ GPIO.setup(23, GPIO.OUT)
 
 GPIO.output(23, GPIO.LOW)
 GPIO.output(18, GPIO.LOW)
+
+# Clean up
+GPIO.cleanup()
