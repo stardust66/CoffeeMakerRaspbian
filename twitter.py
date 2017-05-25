@@ -22,8 +22,6 @@ class TwitterChecker():
         auth = tweepy.OAuthHandler(auth1, auth2)
         auth.set_access_token(access1, access2)
         self.api = tweepy.API(auth)
-
-
         self.last_checked = (datetime.datetime.now()
                              - datetime.timedelta(seconds=15))
         self.logger = logger
@@ -40,7 +38,7 @@ class TwitterChecker():
             search = self.api.search("#spscoffee2k17")
             if search:
                 first_post = search[0]
-                
+
                 # Correct for timezone
                 eastern = datetime.timedelta(hours=4)
                 first_post.created_at -= eastern
