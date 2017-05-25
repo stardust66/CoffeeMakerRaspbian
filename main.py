@@ -72,14 +72,14 @@ class CoffeeMachine():
     def loop(self):
         while True:
             if self.prev_status != GPIO.input(12):
-                print(loaded)
-                loaded = True
+                print(self.loaded)
+                self.loaded = True
 
             # Set load indicator accordingly
-            GPIO.output(16, loaded)
+            GPIO.output(16, self.loaded)
 
             try:
-                if loaded and (t_checker.loop() or w_checker.loop()):
+                if self.loaded and (self.t_checker.loop() or self.w_checker.loop()):
                     self.logger.debug("Coffee is being made.")
                     self.make_coffee()
             except KeyboardInterrupt:
@@ -87,7 +87,7 @@ class CoffeeMachine():
                 self.logger.warning("User interrupted.")
             except:
                 self.logger.warning("Twitter limit hit.")
-                if w_checker.loop():
+                if self.w_checker.loop():
                     self.logger.debug("Coffee is being made.")
                     self.make_coffee()
 
