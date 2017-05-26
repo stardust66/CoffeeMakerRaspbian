@@ -72,8 +72,8 @@ class CoffeeMachine():
     def loop(self):
         while True:
             if self.prev_status != GPIO.input(12):
-                print(self.loaded)
                 self.loaded = True
+                self.logger.debug("loaded set to True.")
 
             # Set load indicator accordingly
             GPIO.output(16, self.loaded)
