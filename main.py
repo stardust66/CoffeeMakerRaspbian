@@ -57,13 +57,16 @@ class CoffeeMachine():
 
         # Read loaded from file
         try:
-            with open("loaded_state", mode="r") as f:
+            with open(self.LOGDIR + "loaded.state", mode="r") as f:
                 val = f.readline()
-                if val is not None and val == "True":
+                if val is not None and "True" in val:
                     self.loaded = True
+                    self.logger.debug("Loaded set to True from file.")
                 else:
                     self.loaded = False
+                    print("Loaded set to False from file.")
         except FileNotFoundError:
+            self.logger.debug("File not found.")
             self.loaded = False
 
         self.prev_status = GPIO.input(12)
@@ -72,10 +75,9 @@ class CoffeeMachine():
     
     def change_loaded(self, loaded):
         self.loaded = loaded
-        with open(self.LOGDIR + "loaded.state", mode="w") as f:
-            f.write(str(self.loaded))
-
         self.logger.debug("Loaded is set to " + str(self.loaded))
+        with open(self.LOGDIR + "loaded.state", mode="w+") as f:
+            f.write(str(self.loaded))
 
     def make_coffee(self):
         self.change_loaded(False)
