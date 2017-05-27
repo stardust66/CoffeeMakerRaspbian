@@ -100,7 +100,7 @@ class CoffeeMachine():
                     self.make_coffee()
             except KeyboardInterrupt:
                 sys.exit()
-                self.logger.warning("User interrupted.")
+                self.logger.error("User interrupted.")
             except:
                 self.logger.warning("Twitter limit hit.")
                 if self.w_checker.loop():
