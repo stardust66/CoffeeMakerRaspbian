@@ -14,9 +14,13 @@ class WebChecker():
 
         Send post request with data served=true
         """
-        data = urlencode({ "served":"true" }).encode()
-        request = Request(self.url, data)
-        self.logger.debug(urlopen(request).read().decode())
+        try:
+            data = urlencode({ "served":"true" }).encode()
+            request = Request(self.url, data)
+            self.logger.debug(urlopen(request).read().decode())
+        except HTTPError as e:
+            self.logger.error("Couldn't send post request to server.")
+            self.logger.error("Server Error: " + e.code)
 
     def loop(self):
         """Check the website for status
