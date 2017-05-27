@@ -15,7 +15,7 @@ os.environ["TZ"] = "US/Eastern"
 class CoffeeMachine():
     def __init__(self):
         # Configure Log
-        LOGDIR = "/home/pi/Documents/coffeemakerraspbian/"
+        self.LOGDIR = "/home/pi/Documents/coffeemakerraspbian/"
         fh = logging.FileHandler(LOGDIR + "coffee.log")
         ih = logging.FileHandler(LOGDIR + "important.log")
         fm = logging.Formatter('%(asctime)s:%(name)s: %(message)s')
@@ -50,13 +50,30 @@ class CoffeeMachine():
         self.t_checker = TwitterChecker(self.logger)
         self.w_checker = WebChecker(self.logger)
 
-        self.loaded = False
+        # Read loaded from file
+        try:
+            with open("loaded_state", mode="r") as f:
+                val = f.readline()
+                if val is not None and val == "True":
+                    self.loaded = True
+                else:
+                    self.loaded = False
+        except FileNotFoundError:
+            self.loaded = False
+
         self.prev_status = GPIO.input(12)
 
         self.loop()
     
+    def change_loaded(self, loaded):
+        self.loaded = loaded
+        with open(self.LOGDIR + "loaded.state", mode="w") as f:
+            f.write(str(self.loaded))
+
+        self.logger.debug("Loaded is set to " + str(self.loaded))
+
     def make_coffee(self):
-        self.loaded = False
+        self.change_loaded(False)
 
         # Turn load indicator off
         GPIO.output(16, GPIO.LOW)
@@ -72,8 +89,7 @@ class CoffeeMachine():
     def loop(self):
         while True:
             if self.prev_status != GPIO.input(12):
-                self.loaded = True
-                self.logger.debug("loaded set to True.")
+                self.change_loaded(True)
 
             # Set load indicator accordingly
             GPIO.output(16, self.loaded)
