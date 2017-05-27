@@ -16,7 +16,7 @@ class CoffeeMachine():
     def __init__(self):
         # Configure Log
         LOGDIR = "/home/pi/Documents/coffeemakerraspbian/"
-        fh = logging.FileHandler(LOGDIR + "coffee.log", mode="w")
+        fh = logging.FileHandler(LOGDIR + "coffee.log")
         ih = logging.FileHandler(LOGDIR + "important.log")
         fm = logging.Formatter('%(asctime)s:%(name)s: %(message)s')
 
