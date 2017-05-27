@@ -1,6 +1,6 @@
 from urllib.request import Request, urlopen
 from urllib.parse import urlencode
-from urllib.error import HTTPError
+from urllib.error import URLError, HTTPError
 import time
 
 class WebChecker():
@@ -24,12 +24,19 @@ class WebChecker():
         page will say "yes". If not it'll say "no". This function should
         be called repeatedly in a loop.
         """
-        response = urlopen(self.url).read().decode()
-        if response == "Yay!":
-            # Put information both in log and console
-            self.logger.debug("Sending post request to server...")
-            print("Sending post request to server...")
-            self.post_served()
-            print()
-            return True
+        # Account for network or server errors
+        try:
+            response = urlopen(self.url).read().decode()
+            if response == "Yay!":
+                # Put information both in log and console
+                self.logger.debug("Sending post request to server...")
+                print("Sending post request to server...")
+                self.post_served()
+                print()
+                return True
+        except URLError as e:
+            self.logger.error("URLError: " + e.reason)
+        except HTTPError as e:
+            self.logger.error("Server Error: " + e.code)
+            
         return False
