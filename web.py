@@ -40,6 +40,6 @@ class WebChecker():
         except URLError as e:
             self.logger.error("URLError: " + e.reason)
         except HTTPError as e:
-            self.logger.error("Server Error " + e.code)
+            self.logger.error("Server Error: " + e.code)
             
         return False
