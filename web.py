@@ -7,6 +7,7 @@ class WebChecker():
     def __init__(self, logger):
         self.url = "http://spscoffee.herokuapp.com/brew-request/"
         self.logger = logger
+        self.logger.debug("Website checker initialized.")
 
     def post_served(self):
         """Tell the server that the coffee has been served
@@ -15,7 +16,7 @@ class WebChecker():
         """
         data = urlencode({ "served":"true" }).encode()
         request = Request(self.url, data)
-        print(urlopen(request).read().decode())
+        self.logger.debug(urlopen(request).read().decode())
 
     def loop(self):
         """Check the website for status
@@ -30,13 +31,11 @@ class WebChecker():
             if response == "Yay!":
                 # Put information both in log and console
                 self.logger.debug("Sending post request to server...")
-                print("Sending post request to server...")
                 self.post_served()
-                print()
                 return True
         except URLError as e:
             self.logger.error("URLError: " + e.reason)
         except HTTPError as e:
-            self.logger.error("Server Error: " + e.code)
+            self.logger.error("Server Error " + e.code)
             
         return False

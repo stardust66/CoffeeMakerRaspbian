@@ -25,6 +25,7 @@ class TwitterChecker():
         self.last_checked = (datetime.datetime.now()
                              - datetime.timedelta(seconds=15))
         self.logger = logger
+        self.logger.debug("Twitter checker initialized.")
 
     def loop(self):
         """Use API to search, view, or post tweets"""
@@ -53,16 +54,9 @@ class TwitterChecker():
 
                     self.logger.debug("Text: " + text)
                     self.logger.debug("Username: " + username)
-                    print(text)
-                    print(username)
-                    print()
                     return True
-                else:
-                    print("None within five minutes")
             else:
-                print("None")
                 return False
-        print("It hasn't been 15 seconds yet")
         return False
 
     def _validate_post(self, post):

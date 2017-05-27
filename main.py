@@ -18,16 +18,21 @@ class CoffeeMachine():
         self.LOGDIR = "/home/pi/Documents/coffeemakerraspbian/"
         fh = logging.FileHandler(LOGDIR + "coffee.log")
         ih = logging.FileHandler(LOGDIR + "important.log")
+        ch = logging.StreamHandler(sys.stdout)
         fm = logging.Formatter('%(asctime)s:%(name)s: %(message)s')
+        sm = logging.Formatter('%(message)s')
 
         fh.setLevel(logging.DEBUG)
         ih.setLevel(logging.WARNING)
+        ch.setLevel(logging.DEBUG)
         fh.setFormatter(fm)
         ih.setFormatter(fm)
+        ch.setFormatter(sm)
 
         self.logger = logging.getLogger("main")
         self.logger.addHandler(fh)
         self.logger.addHandler(ih)
+        self.logger.addHandler(ch)
         self.logger.setLevel(logging.DEBUG)
 
         self.logger.debug("Initialized")
