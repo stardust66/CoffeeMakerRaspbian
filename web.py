@@ -1,6 +1,7 @@
 from urllib.request import Request, urlopen
 from urllib.parse import urlencode
 from urllib.error import URLError, HTTPError
+from socket import timeout
 import time
 
 class WebChecker():
@@ -31,7 +32,7 @@ class WebChecker():
         """
         # Account for network or server errors
         try:
-            response = urlopen(self.url).read().decode()
+            response = urlopen(self.url, timeout=10).read().decode()
             if response == "Yay!":
                 # Put information both in log and console
                 self.logger.debug("Sending post request to server...")
@@ -41,5 +42,6 @@ class WebChecker():
             self.logger.error("URLError: " + e.reason)
         except HTTPError as e:
             self.logger.error("Server Error: " + e.code)
-            
+        except timeout:
+            self.logger.error("Timeout")
         return False

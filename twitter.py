@@ -1,4 +1,6 @@
 import tweepy
+from tweepy.error import RateLimitError
+from socket import timeout
 import time
 import datetime
 import os
@@ -21,7 +23,7 @@ class TwitterChecker():
 
         auth = tweepy.OAuthHandler(auth1, auth2)
         auth.set_access_token(access1, access2)
-        self.api = tweepy.API(auth)
+        self.api = tweepy.API(auth, timeout=10)
         self.last_checked = (datetime.datetime.now()
                              - datetime.timedelta(seconds=15))
         self.logger = logger
@@ -36,7 +38,16 @@ class TwitterChecker():
                     - datetime.timedelta(seconds=40, minutes=4))
 
             self.last_checked = datetime.datetime.now()
-            search = self.api.search("#spscoffee2k17")
+
+            try:
+                search = self.api.search("#spscoffee2k17")
+            except RateLimitError:
+                self.logger.error("Twitter limit hit.")
+                return False
+            except timeout:
+                self.logger.error("Twitter timeout.")
+                return False
+
             if search:
                 first_post = search[0]
 

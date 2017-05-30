@@ -108,11 +108,8 @@ class CoffeeMachine():
             except KeyboardInterrupt:
                 sys.exit()
                 self.logger.error("User interrupted.")
-            except:
-                self.logger.warning("Twitter limit hit.")
-                if self.w_checker.loop():
-                    self.logger.debug("Coffee is being made.")
-                    self.make_coffee()
+            except Exception as e:
+                self.logger.error("Unknown error: {}".format(e))
 
             self.prev_status = GPIO.input(12)
             time.sleep(1)
