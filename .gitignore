@@ -1,6 +1,6 @@
 venv/*
 *.swp
 __pycache__/*
-coffee.log
+coffee.log*
 important.log
 loaded.state
