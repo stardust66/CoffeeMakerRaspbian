@@ -16,7 +16,11 @@ class CoffeeMachine():
     def __init__(self):
         # Configure Log
         self.LOGDIR = "/home/pi/Documents/coffeemakerraspbian/"
-        fh = logging.FileHandler(self.LOGDIR + "coffee.log", mode="w")
+        fh = logging.handlers.TimedRotatingFileHandler(self.LOGDIR
+            + "coffee.log",
+            when="S",
+            interval=20,
+            backupCount=10)
         ih = logging.FileHandler(self.LOGDIR + "important.log")
         ch = logging.StreamHandler(sys.stdout)
         fm = logging.Formatter('%(asctime)s:%(name)s: %(message)s')
