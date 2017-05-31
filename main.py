@@ -109,7 +109,7 @@ class CoffeeMachine():
                 sys.exit()
                 self.logger.error("User interrupted.")
             except Exception as e:
-                self.logger.error("Unknown error: {}".format(e))
+                self.logger.error("Unknown error: {}".format(str(e)))
 
             self.prev_status = GPIO.input(12)
             time.sleep(1)
