@@ -19,9 +19,9 @@ class CoffeeMachine():
         self.LOGDIR = "/home/pi/Documents/coffeemakerraspbian/"
         fh = logging.handlers.TimedRotatingFileHandler(
             self.LOGDIR + "coffee.log",
-            when="S",
-            interval=20,
-            backupCount=10
+            when="D",
+            interval=1,
+            backupCount=5
         )
         ih = logging.FileHandler(self.LOGDIR + "important.log")
         ch = logging.StreamHandler(sys.stdout)
