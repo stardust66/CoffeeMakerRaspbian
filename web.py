@@ -6,7 +6,7 @@ import time
 
 class WebChecker():
     def __init__(self, logger):
-        self.url = "http://spscoffee.herokuapp.com/brew-request/"
+        self.url = "https://spscoffee.herokuapp.com/brew-request/"
         self.logger = logger
         self.logger.debug("Website checker initialized.")
 
