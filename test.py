@@ -33,7 +33,7 @@ class TestTwitterChecker(unittest.TestCase):
 
         self.logger = PassLogger()
         self.t_checker = TwitterChecker(self.logger)
-        time_now = datetime.datetime.now()
+        time_now = datetime.datetime.utcnow()
         wrong_time = time_now - datetime.timedelta(hours=4)
         self.right_post = TestPost("jasonchen66", time_now)
         self.wrong_username = TestPost("hello", time_now)
