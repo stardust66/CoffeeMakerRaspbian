@@ -9,8 +9,7 @@ import sys
 allowed_users = ["jasonchen66", "s0rokka"]
 
 class TwitterChecker():
-    def __init__(self, logger):
-        # Authentication
+    def __init__(self, logger): # Authentication
         try:
             auth1 = os.environ["AUTH_HANDLE1"]
             auth2 = os.environ["AUTH_HANDLE2"]
@@ -51,11 +50,6 @@ class TwitterChecker():
             if search:
                 first_post = search[0]
 
-                # Correct for timezone
-                # Only works for EDT
-                eastern = datetime.timedelta(hours=4)
-                first_post.created_at -= eastern
-
                 # Check if the post is made within five minutes
                 if (self._validate_post(first_post)):
                     self.logger.debug("Found tweet.")
@@ -72,7 +66,7 @@ class TwitterChecker():
 
     def _validate_post(self, post):
         allowed_users = ["jasonchen66", "s0rokka"]
-        delta = (datetime.datetime.now()
+        delta = (datetime.datetime.utcnow()
                 - datetime.timedelta(seconds=40, minutes=4))
 
         if (post.created_at > delta and
